@@ -1,0 +1,1976 @@
+You are an expert senior full-stack product engineer, UX designer, AI systems architect, and hackathon prototype builder.
+
+Build a complete end-to-end working prototype called:
+
+MRPL CONFIDENTIAL INDUSTRIAL WORKCELL
+
+Project:
+SIH26117 — Sovereign On-Premise Agentic AI Workbench using Open-Weight Multimodal LLMs for Confidential Industrial Work
+
+IMPORTANT:
+This is a hackathon prototype, not a production enterprise system.
+
+The goal is NOT to implement every enterprise component from the architecture document.
+
+The goal is to build ONE polished, convincing, fully navigable end-to-end Workcell experience that demonstrates the core product idea:
+
+Employee creates an industrial task
+→ Workcell is initialized
+→ identity, role, scope and evidence are validated
+→ authorized documents are admitted
+→ system creates a bounded execution workflow
+→ employee starts the workflow
+→ local-AI-style agent performs the task using permitted tools/models
+→ progress is continuously shown
+→ if an important exception/risk is detected, execution pauses
+→ human reviews and approves/rejects
+→ workflow resumes
+→ result is independently verified
+→ final work package is generated
+→ approval/release is shown
+→ complete process remains auditable
+
+The UI must be extremely clean, professional, simple and easy for an industrial employee to understand.
+
+Do NOT create a giant dashboard containing every backend technology.
+
+Do NOT expose unnecessary implementation details such as Neo4j, Qdrant, OPA, PostgreSQL internals, agent framework internals, model infrastructure, etc. as primary UI features.
+
+The user should understand the product without understanding the architecture.
+
+==================================================
+1. CORE PRODUCT CONCEPT
+==================================================
+
+The central abstraction is the WORKCELL.
+
+A Workcell is a server-controlled execution environment for ONE specific industrial task.
+
+It binds together:
+
+- User identity
+- User role
+- Task
+- Asset/project scope
+- Classification
+- Authorized evidence
+- Evidence versions
+- Permitted AI capabilities
+- Permitted tools
+- Bounded workflow
+- Exceptions
+- Verification
+- Human review
+- Approval
+- Final work package
+- Audit history
+
+For the prototype, use this primary scenario:
+
+WORKCELL:
+WC-P204A-001
+
+TASK:
+Pump P-204A Replacement Analysis
+
+ASSET:
+Pump P-204A
+
+PURPOSE:
+Compare vendor quotations and prepare an approval note.
+
+CLASSIFICATION:
+CONFIDENTIAL
+
+PRIMARY DEMO USER:
+Engineer A
+
+ROLE:
+Maintenance Engineer
+
+==================================================
+2. THE MOST IMPORTANT UX PRINCIPLE
+==================================================
+
+The user should never need to understand the internal architecture.
+
+The employee should only need to understand:
+
+1. What task am I doing?
+2. What information am I providing?
+3. Is the system allowed to use it?
+4. What is the AI currently doing?
+5. Is there a problem?
+6. Do I need to make a decision?
+7. Is the result verified?
+8. What final work package was produced?
+
+The interface should always clearly communicate:
+
+WHAT IS HAPPENING
+WHY IT IS HAPPENING
+WHAT THE SYSTEM FOUND
+WHETHER THE USER NEEDS TO ACT
+
+==================================================
+3. TECHNOLOGY
+==================================================
+
+Build a modern full-stack web application.
+
+Preferred stack:
+
+Frontend:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- shadcn/ui or similarly clean component system
+- Lucide icons
+- Responsive design
+
+Backend:
+- Next.js server/API routes or a clean backend layer
+- Use a structured data model
+- Use mock/service adapters for AI, policy, retrieval, tools and verification
+
+Database:
+- Use SQLite or another lightweight local database if practical
+- If database setup creates unnecessary complexity, use a clean persistent local JSON/data layer
+- Keep all application state structured and easy to replace with PostgreSQL later
+
+Important:
+
+The application must run easily in Replit.
+
+Do not depend on external paid AI APIs.
+
+Do not require OpenAI, Anthropic, Gemini, or any external AI API.
+
+Create a LOCAL MODEL ADAPTER interface so a real local open-weight model can be connected later.
+
+For the hackathon prototype, provide a deterministic/mock local-AI implementation that behaves like a local model and produces realistic outputs.
+
+Clearly label the UI:
+
+"Local AI"
+"On-Premise"
+"No External AI API"
+
+Do not falsely claim that a real local LLM is running if the prototype is using deterministic mock responses.
+
+==================================================
+4. VISUAL DESIGN
+==================================================
+
+The design should look like a modern enterprise industrial software product.
+
+Style:
+
+- Clean
+- Professional
+- Minimal
+- High trust
+- Easy to scan
+- White/light neutral main background
+- Deep navy/blue primary branding
+- Green for successful/verified states
+- Amber for warnings
+- Red for blocked/high-risk states
+- Purple may be used sparingly for AI-related elements
+
+Avoid:
+
+- Excessive gradients
+- Excessive cards
+- Huge dashboards
+- Tiny unreadable text
+- Overloaded screens
+- Too many colors
+- Decorative AI graphics
+- Unnecessary animations
+- Technical jargon in the user-facing UI
+
+Use generous spacing.
+
+Use consistent cards.
+
+Use clear typography.
+
+Use clear status badges.
+
+Use icons only when they improve comprehension.
+
+Every screen must have one obvious primary action.
+
+==================================================
+5. APPLICATION NAVIGATION
+==================================================
+
+Keep navigation simple.
+
+Main navigation:
+
+- Dashboard
+- My Workcells
+- Documents
+- Audit
+
+Do NOT create primary navigation items for:
+
+- Model Router
+- Vector Database
+- Graph Database
+- Policy Engine
+- Tool Gateway
+- Sandbox
+- Exception Engine
+- Verification Engine
+
+These are implementation mechanisms and should appear only where relevant inside the Workcell experience.
+
+When a user opens a Workcell, the Workcell becomes the main workspace.
+
+==================================================
+6. SCREEN 1 — LOGIN
+==================================================
+
+Create a polished login screen.
+
+Brand:
+
+MRPL Confidential Industrial Workcell
+
+Subtitle:
+
+Sovereign On-Premise Agentic AI Workbench for Confidential Industrial Work
+
+Show a small security message:
+
+"Authorized personnel only"
+
+Fields:
+
+Username
+Password
+
+Buttons:
+
+Sign In
+
+Optional secondary:
+"Sign in with MRPL SSO"
+
+For prototype, support demo credentials:
+
+Username:
+engineer.a
+
+Password:
+demo123
+
+After successful login:
+
+Go to Dashboard / My Workcells.
+
+Do not implement real enterprise authentication.
+
+Make it visually convincing but clearly prototype-level.
+
+==================================================
+7. SCREEN 2 — DASHBOARD
+==================================================
+
+Keep this dashboard simple.
+
+Header:
+
+Good morning, Engineer A
+
+Role:
+Maintenance Engineer
+
+Security status:
+
+ON-PREMISE
+No External AI API
+
+Primary CTA:
+
++ Initiate New Workcell
+
+Show only a few useful statistics:
+
+Active Workcells
+Pending Reviews
+Verified Work Packages
+
+Then show:
+
+Recent Workcells
+
+Example:
+
+WC-P204A-001
+Pump P-204A Replacement Analysis
+Status: Ready for Review
+
+Do not overload the dashboard.
+
+==================================================
+8. SCREEN 3 — INITIATE NEW WORKCELL
+==================================================
+
+This is one of the most important screens.
+
+Title:
+
+Initiate New Workcell
+
+Subtitle:
+
+Define the industrial task you want to perform.
+
+Fields:
+
+Task Name
+Asset / Project
+Purpose
+Classification
+
+For the demo, allow the user to create:
+
+Task:
+Pump P-204A Replacement Analysis
+
+Asset:
+Pump P-204A
+
+Purpose:
+Compare vendor quotations and prepare an approval note.
+
+Classification:
+Confidential
+
+Primary button:
+
+Continue
+
+When clicked:
+
+Create a Workcell ID.
+
+Example:
+
+WC-P204A-001
+
+Then proceed to Evidence & Initialization.
+
+==================================================
+9. SCREEN 4 — EVIDENCE & WORKCELL INITIALIZATION
+==================================================
+
+This screen should clearly demonstrate one of the core ideas:
+
+THE USER'S ACCESS DOES NOT AUTOMATICALLY MEAN THE AI CAN ACCESS EVERYTHING.
+
+Title:
+
+Workcell Initialization
+
+Show:
+
+Workcell:
+WC-P204A-001
+
+User:
+Engineer A
+
+Role:
+Maintenance Engineer
+
+Asset:
+Pump P-204A
+
+Task:
+Pump Replacement Analysis
+
+Then show document upload/selection.
+
+Seed the prototype with these documents:
+
+1. Failure_Report_P204A.pdf
+Version 3
+Authorized
+
+2. Pump_Datasheet.pdf
+Version 4
+Authorized
+
+3. Maintenance_SOP.pdf
+Version 5
+Authorized
+
+4. Vendor_A_Quote.pdf
+Version 2
+Authorized
+
+5. Vendor_B_Quote.pdf
+Version 1
+Authorized
+
+6. Vendor_Internal_Strategy.pdf
+Version 1
+RESTRICTED
+
+The sixth document is deliberately restricted.
+
+The system should show:
+
+5 documents admitted
+1 document blocked
+
+Example:
+
+✓ Failure Report — Authorized — Admitted
+✓ Pump Datasheet — Authorized — Admitted
+✓ Maintenance SOP — Authorized — Admitted
+✓ Vendor A Quote — Authorized — Admitted
+✓ Vendor B Quote — Authorized — Admitted
+🔒 Vendor Internal Strategy — Restricted — Blocked
+
+Show a validation checklist:
+
+✓ Identity verified
+✓ Role verified
+✓ Asset scope verified
+✓ Task authorization verified
+✓ Document permissions checked
+✓ Classification checked
+✓ Evidence versions checked
+✓ Required evidence available
+✓ Permitted workflow available
+✓ Required tools available
+
+Then show:
+
+WORKCELL READY
+
+Button:
+
+Continue to Workflow
+
+Do not expose backend policy implementation.
+
+The user only needs to understand the result of validation.
+
+==================================================
+10. SCREEN 5 — WORKFLOW PREVIEW
+==================================================
+
+After initialization, generate a bounded execution workflow.
+
+IMPORTANT:
+
+The AI must NOT appear to invent unrestricted actions.
+
+The workflow should be a predefined/bounded playbook selected for this task.
+
+Title:
+
+Execution Plan
+
+Subtitle:
+
+The Workcell has prepared the following controlled workflow.
+
+Steps:
+
+1. Validate task and asset
+2. Extract pump requirements
+3. Compare vendor quotations
+4. Perform required calculations
+5. Detect exceptions
+6. Verify findings
+7. Generate approval package
+8. Human review
+9. Final release
+
+Show which capabilities will be used:
+
+Local AI
+Document Analysis
+Multimodal Analysis
+Quotation Comparison
+Deterministic Calculator
+Verification
+
+Show:
+
+"Human approval may be required if a high-risk exception is detected."
+
+Primary button:
+
+Start Workcell
+
+Secondary:
+
+Back
+
+==================================================
+11. SCREEN 6 — WORKCELL EXECUTION
+==================================================
+
+This is the main product screen.
+
+Make it extremely clean.
+
+Header:
+
+Workcell:
+WC-P204A-001
+
+Task:
+Pump P-204A Replacement Analysis
+
+Status:
+RUNNING
+
+Show a large overall progress bar.
+
+Example:
+
+42% Complete
+
+Then show a horizontal workflow:
+
+Initialization
+✓
+
+Analysis
+●
+
+Exception Handling
+○
+
+Verification
+○
+
+Review
+○
+
+Release
+○
+
+Below it, show:
+
+CURRENT STEP
+
+"Extracting pump requirements"
+
+Agent:
+
+Evidence Analysis Agent
+
+Model:
+
+Local Multimodal Model
+
+Evidence:
+
+Pump_Datasheet.pdf
+Failure_Report_P204A.pdf
+
+Then show an activity timeline:
+
+✓ Workcell initialized
+✓ Identity and authorization validated
+✓ Evidence admitted
+✓ Failure report processed
+→ Extracting requirements
+○ Comparing vendors
+○ Verification
+○ Approval package
+
+The progress must update as the simulated process executes.
+
+Do not make the user wait for long.
+
+Use a realistic but fast simulated execution sequence.
+
+==================================================
+12. AGENT ACTIVITY
+==================================================
+
+Show the agent's actions in understandable language.
+
+Example:
+
+"Reading authorized evidence..."
+
+"Extracting required discharge pressure..."
+
+"Comparing Vendor A specifications..."
+
+"Comparing Vendor B specifications..."
+
+"Running deterministic specification check..."
+
+"Checking for conflicting evidence..."
+
+Avoid technical logs such as:
+
+"Calling vector_db.retrieve()"
+
+Do not expose implementation-level noise.
+
+==================================================
+13. TOOL USAGE
+==================================================
+
+The system must visually demonstrate that the agent uses controlled tools.
+
+Show a small "Tools Used" area.
+
+Tools:
+
+Document Reader
+Quotation Comparator
+Deterministic Calculator
+Approval Note Generator
+
+Each can display:
+
+✓ Allowed
+✓ Completed
+
+For example:
+
+Document Reader
+Authorized
+Completed
+
+Quotation Comparator
+Authorized
+Running
+
+Do not create arbitrary tool execution.
+
+All tools should be simulated deterministic functions in the prototype.
+
+==================================================
+14. MULTIMODAL FUNCTIONALITY
+==================================================
+
+The prototype should support:
+
+PDF upload
+Scanned PDF representation
+Image upload
+Spreadsheet/quotation representation
+
+The UI should allow the user to upload/select these types.
+
+The demo can use seeded mock extraction results.
+
+For the equipment image, show:
+
+Pump P-204A Image
+Image Analysis:
+Asset matches P-204A
+
+For scanned documents:
+
+OCR Status:
+Completed
+
+Do not pretend to perform real industrial computer vision if the prototype is only simulating it.
+
+Use labels such as:
+
+"Prototype Vision Analysis"
+
+where appropriate.
+
+==================================================
+15. EXCEPTION HANDLING
+==================================================
+
+This is one of the most important features.
+
+The workflow should deliberately encounter an exception.
+
+Use:
+
+Vendor B discharge pressure:
+10 bar
+
+Required:
+12 bar
+
+The agent should detect:
+
+HIGH-SEVERITY EXCEPTION
+
+Vendor B does not satisfy required discharge pressure.
+
+Show:
+
+Expected:
+12 bar
+
+Found:
+10 bar
+
+Source:
+Vendor B Quote v1
+
+Requirement Source:
+Pump Datasheet v4
+
+Status:
+
+REVIEW REQUIRED
+
+At this moment:
+
+PAUSE THE WORKFLOW.
+
+Do NOT automatically continue.
+
+Show:
+
+"Human decision required before the workflow can continue."
+
+Button:
+
+Review Exception
+
+==================================================
+16. HUMAN REVIEW SCREEN
+==================================================
+
+Create a dedicated clean review screen/modal.
+
+Title:
+
+Human Review Required
+
+Show:
+
+Exception:
+Vendor B specification mismatch
+
+Evidence:
+
+Pump Datasheet v4
+Page 2
+
+Vendor B Quote v1
+Page 3
+
+AI Finding:
+
+Vendor B does not satisfy the required discharge pressure.
+
+Verification:
+
+✓ Required value extracted
+✓ Vendor value extracted
+✓ Comparison performed
+✓ Source references available
+
+Decision:
+
+[ Reject / Send Back ]
+
+[ Approve & Continue ]
+
+If user selects Approve & Continue:
+
+Record:
+
+Reviewer:
+Engineer A / Technical Manager
+
+Decision:
+Approved
+
+Time:
+Current prototype timestamp
+
+Then resume execution.
+
+If Reject:
+
+Move Workcell to:
+
+ACTION REQUIRED
+
+and allow the user to add a comment.
+
+==================================================
+17. VERIFICATION
+==================================================
+
+After the agent completes the analysis, run a verification phase.
+
+Title:
+
+Verification
+
+Show claims and evidence.
+
+Example:
+
+Claim:
+Required discharge pressure = 12 bar
+
+Source:
+Pump Datasheet v4
+Page 2
+
+Result:
+✓ Verified
+
+Claim:
+Vendor A discharge pressure = 12 bar
+
+Source:
+Vendor A Quote v2
+Page 4
+
+Result:
+✓ Verified
+
+Claim:
+Vendor B discharge pressure = 10 bar
+
+Source:
+Vendor B Quote v1
+Page 3
+
+Result:
+✓ Verified
+
+Compliance:
+Vendor A = PASS
+Vendor B = FAIL
+
+Show:
+
+Verification Complete
+
+Do not claim "100% correct" or "zero hallucinations."
+
+Use:
+
+"Verified against available evidence."
+
+==================================================
+18. FINAL RESULT / WORK PACKAGE
+==================================================
+
+After verification and human review, generate:
+
+VERIFIED WORK PACKAGE
+
+Show:
+
+Pump P-204A Replacement Analysis
+
+Documents:
+
+✓ Vendor Comparison
+✓ Verification Report
+✓ Approval Note
+✓ Evidence References
+
+Summary:
+
+Vendor A satisfies the required discharge specification.
+
+Vendor B does not satisfy the required discharge specification.
+
+Exception:
+Reviewed and resolved.
+
+Verification:
+Passed
+
+Human Review:
+Approved
+
+Status:
+
+READY FOR RELEASE
+
+Buttons:
+
+View Work Package
+
+Download Approval Note
+
+Release Work Package
+
+For the prototype, generated files can be mock downloadable files or generated local files.
+
+==================================================
+19. RELEASE
+==================================================
+
+Before release, show a final release check.
+
+Title:
+
+Release Validation
+
+Checklist:
+
+✓ User authorization valid
+✓ Workcell scope valid
+✓ Evidence versions valid
+✓ Verification valid
+✓ Human approval valid
+✓ Output integrity valid
+✓ No unresolved critical exceptions
+
+Then:
+
+READY TO RELEASE
+
+Button:
+
+Release Verified Work Package
+
+After release:
+
+Status:
+RELEASED
+
+Show:
+
+Release ID
+Timestamp
+Approver
+Workcell ID
+
+==================================================
+20. APPROVAL INVALIDATION DEMO
+==================================================
+
+This is an important hackathon demonstration.
+
+After a Work Package is approved/released, provide a small prototype action:
+
+"Simulate Output Modification"
+
+When clicked:
+
+Modify the generated output version/hash.
+
+Then show:
+
+OUTPUT INTEGRITY CHANGED
+
+Original approved output:
+Version 1
+
+Current output:
+Version 2
+
+Result:
+
+APPROVAL INVALIDATED
+
+RELEASE BLOCKED
+
+Reason:
+
+The approved artefact no longer matches the reviewed artefact.
+
+This demonstrates dependency-bound approval.
+
+Do NOT make this the normal user flow.
+Make it a demo/testing capability.
+
+==================================================
+21. AUDIT
+==================================================
+
+Create a simple Audit page.
+
+Show chronological events:
+
+10:01
+Engineer A logged in
+
+10:02
+Workcell WC-P204A-001 created
+
+10:03
+Evidence validation completed
+
+10:03
+Restricted document blocked
+
+10:04
+Execution started
+
+10:05
+Vendor comparison completed
+
+10:06
+High-severity exception detected
+
+10:07
+Human review requested
+
+10:08
+Exception approved
+
+10:09
+Verification completed
+
+10:10
+Work package approved
+
+10:11
+Work package released
+
+The audit should be understandable to a normal user.
+
+==================================================
+22. MY WORKCELLS
+==================================================
+
+Create a clean list/table of Workcells.
+
+Columns:
+
+Workcell
+Task
+Asset
+Owner
+Status
+Last Updated
+
+Example:
+
+WC-P204A-001
+Pump Replacement Analysis
+P-204A
+Engineer A
+Released
+
+Allow clicking a Workcell to reopen its lifecycle.
+
+==================================================
+23. DOCUMENTS
+==================================================
+
+Create a simple document repository.
+
+Show:
+
+Document
+Version
+Classification
+Access
+Status
+
+Example:
+
+Failure Report
+v3
+Confidential
+Authorized
+Admitted
+
+Vendor Internal Strategy
+v1
+Restricted
+Not Authorized
+Blocked
+
+Keep this page simple.
+
+==================================================
+24. IMPORTANT DATA MODEL
+==================================================
+
+Create structured entities for:
+
+User
+
+Fields:
+id
+name
+username
+role
+department
+authorizedAssets
+
+Workcell
+
+Fields:
+id
+task
+asset
+purpose
+classification
+owner
+status
+createdAt
+currentStep
+progress
+
+Evidence
+
+Fields:
+id
+name
+type
+version
+classification
+authorized
+admitted
+status
+source
+workcellId
+
+WorkflowStep
+
+Fields:
+id
+name
+status
+order
+startedAt
+completedAt
+requiresHumanApproval
+
+ToolExecution
+
+Fields:
+id
+tool
+status
+allowed
+startedAt
+completedAt
+result
+
+Exception
+
+Fields:
+id
+title
+severity
+description
+source
+status
+requiresHumanApproval
+resolution
+
+Verification
+
+Fields:
+id
+claim
+source
+check
+result
+
+Approval
+
+Fields:
+id
+reviewer
+decision
+comment
+timestamp
+outputVersion
+
+WorkPackage
+
+Fields:
+id
+workcellId
+status
+version
+approvalStatus
+verificationStatus
+releaseStatus
+
+AuditEvent
+
+Fields:
+timestamp
+actor
+action
+workcellId
+status
+description
+
+==================================================
+25. STATE MACHINE
+==================================================
+
+Use explicit Workcell states:
+
+DRAFT
+INITIALIZING
+READY
+RUNNING
+PAUSED_FOR_REVIEW
+VERIFYING
+REVIEW_REQUIRED
+APPROVED
+RELEASE_READY
+RELEASED
+BLOCKED
+REJECTED
+
+The UI must always clearly show the current state.
+
+Do not allow impossible transitions.
+
+For example:
+
+RUNNING
+→ PAUSED_FOR_REVIEW
+→ APPROVED
+→ RUNNING
+
+or:
+
+RUNNING
+→ VERIFYING
+→ REVIEW_REQUIRED
+→ APPROVED
+→ RELEASE_READY
+→ RELEASED
+
+==================================================
+26. CORE SECURITY SIMULATION
+==================================================
+
+Even though this is a prototype, demonstrate these principles functionally:
+
+1. Restricted document cannot be admitted.
+
+2. Workcell is scoped to the selected asset.
+
+3. User role determines allowed scope.
+
+4. Agent cannot execute arbitrary tools.
+
+5. Tool execution passes through a simulated permission check.
+
+6. High-risk exception pauses the workflow.
+
+7. Human approval is required.
+
+8. Verification happens before release.
+
+9. Modified approved output invalidates approval.
+
+10. No external AI API is called.
+
+Do not implement fake enterprise-grade security claims.
+
+Implement the prototype logic honestly.
+
+==================================================
+27. LOCAL AI ARCHITECTURE
+==================================================
+
+Create a service interface such as:
+
+LocalAIService
+
+Methods:
+
+analyzeTask()
+analyzeDocument()
+extractRequirements()
+compareVendors()
+detectExceptions()
+generateApprovalNote()
+
+For the prototype these can return deterministic seeded results.
+
+Structure the code so that later a local open-weight model can replace the mock implementation.
+
+Do not hardcode AI logic directly into UI components.
+
+==================================================
+28. MODEL ROUTER
+==================================================
+
+Create a simple model selection abstraction.
+
+Example:
+
+Document analysis:
+Local Multimodal Model
+
+Text reasoning:
+Local Reasoning Model
+
+Embedding/search:
+Local Embedding Model
+
+The prototype may use mock model names.
+
+Clearly show:
+
+Local
+On-Premise
+
+Do not claim these models are actually running if they are not.
+
+==================================================
+29. TOOL GATEWAY
+==================================================
+
+Implement a small service:
+
+ToolGateway
+
+Allowed tools:
+
+read_document
+compare_vendor_quotes
+calculate
+generate_approval_note
+
+Each tool must be invoked through this gateway.
+
+The gateway should check:
+
+- Workcell scope
+- Tool permission
+- Current workflow state
+
+If not allowed:
+
+return BLOCKED
+
+Display the result in the UI when relevant.
+
+==================================================
+30. PROGRESS SYSTEM
+==================================================
+
+Every workflow must show progress.
+
+Use both:
+
+Overall progress bar
+
+and
+
+Step-by-step execution list.
+
+Example:
+
+OVERALL
+━━━━━━━━━━━━━━━━━━━━━━ 68%
+
+STEPS
+
+✓ Initialize
+✓ Validate evidence
+✓ Extract requirements
+✓ Compare vendors
+→ Detect exceptions
+○ Verify
+○ Human review
+○ Release
+
+Progress must update smoothly during the simulated execution.
+
+==================================================
+31. ERROR HANDLING
+==================================================
+
+Never leave the user staring at a blank page.
+
+If something fails:
+
+show a clear message:
+
+"Unable to complete this step."
+
+Then:
+
+Retry
+
+or
+
+Review Issue
+
+Do not show raw stack traces in the UI.
+
+Log technical errors in the console/server logs.
+
+==================================================
+32. RESPONSIVE UI
+==================================================
+
+Desktop-first because this is an industrial workstation application.
+
+Still ensure reasonable tablet responsiveness.
+
+Use consistent:
+
+- Header
+- Sidebar
+- Page title
+- Status badges
+- Cards
+- Tables
+- Progress bars
+- Buttons
+- Dialogs
+
+==================================================
+33. IMPORTANT UX RULE
+==================================================
+
+ONE SCREEN = ONE PRIMARY PURPOSE.
+
+Do not put:
+
+documents
+agent logs
+verification
+approval
+exceptions
+and audit
+
+all into one giant screen.
+
+Instead, each stage should have a focused screen.
+
+The Workcell header can remain persistent:
+
+WC-P204A-001
+Pump P-204A
+Current Status
+
+==================================================
+34. MAIN USER JOURNEY
+==================================================
+
+The complete happy path should be:
+
+LOGIN
+
+↓
+
+DASHBOARD
+
+↓
+
+INITIATE NEW WORKCELL
+
+↓
+
+ENTER TASK + ASSET + PURPOSE
+
+↓
+
+UPLOAD/SELECT DOCUMENTS
+
+↓
+
+WORKCELL INITIALIZATION
+
+↓
+
+VALIDATE IDENTITY + ROLE + SCOPE + EVIDENCE
+
+↓
+
+BLOCK UNAUTHORIZED DOCUMENT
+
+↓
+
+WORKFLOW PREVIEW
+
+↓
+
+USER CLICKS START
+
+↓
+
+AGENT EXECUTION
+
+↓
+
+LOCAL AI ANALYSIS
+
+↓
+
+CONTROLLED TOOLS
+
+↓
+
+EXCEPTION DETECTED
+
+↓
+
+WORKFLOW PAUSES
+
+↓
+
+HUMAN REVIEW
+
+↓
+
+APPROVE & CONTINUE
+
+↓
+
+VERIFICATION
+
+↓
+
+FINAL WORK PACKAGE
+
+↓
+
+RELEASE VALIDATION
+
+↓
+
+RELEASE
+
+↓
+
+AUDIT
+
+==================================================
+35. DEMO SCENARIO
+==================================================
+
+The seeded demo must work without requiring the user to upload everything manually.
+
+Provide a button:
+
+"Load P-204A Demo"
+
+This loads:
+
+Failure Report
+Pump Datasheet
+Maintenance SOP
+Vendor A Quote
+Vendor B Quote
+Restricted Vendor Document
+Pump Image
+
+Then the user can walk through the complete process.
+
+The demo should take approximately 2–4 minutes when running.
+
+Do not create long artificial delays.
+
+Use short simulated transitions.
+
+==================================================
+36. DEMO SCRIPT
+==================================================
+
+The intended judge demonstration should be:
+
+1. Login as Engineer A.
+
+2. Click:
+"Initiate New Workcell"
+
+3. Enter:
+Pump P-204A Replacement Analysis
+
+4. Add/Load the demo evidence.
+
+5. Show:
+5 authorized documents admitted
+1 restricted document blocked.
+
+6. Show:
+Workcell validation passed.
+
+7. Show:
+Controlled execution plan.
+
+8. Click:
+Start Workcell.
+
+9. Watch the progress.
+
+10. Show:
+AI extracts requirements and compares vendors.
+
+11. System detects:
+Vendor B = 10 bar
+Required = 12 bar
+
+12. Workflow pauses.
+
+13. Human Review screen appears.
+
+14. Reviewer approves the resolution.
+
+15. Workflow resumes.
+
+16. Verification completes.
+
+17. Final Work Package is generated.
+
+18. Human approval is shown.
+
+19. Release validation passes.
+
+20. Release Work Package.
+
+21. Optionally demonstrate:
+Modify approved output.
+
+22. Show:
+Approval invalidated
+Release blocked.
+
+This should be the main story of the product.
+
+==================================================
+37. WHAT NOT TO BUILD
+==================================================
+
+Do NOT spend time building:
+
+- Full enterprise SSO
+- Real MRPL identity integration
+- Real ERP integration
+- Real CMMS integration
+- Kubernetes
+- High availability
+- Disaster recovery
+- Complex Neo4j infrastructure
+- Complex Qdrant infrastructure
+- Large multi-model orchestration
+- Voice
+- General P&ID intelligence
+- Full autonomous industrial control
+- Arbitrary shell execution
+- Arbitrary code execution
+- Enterprise policy administration
+- Real production signing infrastructure
+
+These are future production extensions.
+
+The prototype should remain focused.
+
+==================================================
+38. IMPORTANT PRODUCT POSITIONING
+==================================================
+
+Do NOT describe the product as:
+
+"A private ChatGPT."
+
+Do NOT describe it as:
+
+"Just a RAG chatbot."
+
+Do NOT claim:
+
+"Zero hallucinations."
+
+Do NOT claim:
+
+"Completely secure."
+
+Do NOT claim:
+
+"Production-ready enterprise security."
+
+Instead position it as:
+
+"A sovereign on-premise industrial AI Workcell that binds task scope, authorized evidence, bounded agent execution, verification and human approval into one controlled workflow."
+
+Core message:
+
+"The model reasons.
+The policy determines authority.
+The evidence gate controls what it can see.
+The tool gateway controls what it can do.
+Verification checks the result.
+The human approves.
+The Workcell records the lifecycle."
+
+==================================================
+39. CODE QUALITY
+==================================================
+
+Use clean modular architecture.
+
+Separate:
+
+components/
+services/
+data/
+types/
+pages/routes/
+utils/
+
+Do not put the entire application in one file.
+
+Use TypeScript types.
+
+Use reusable components.
+
+Use clear naming.
+
+Use comments for important security/workflow logic.
+
+Make the application easy for another developer to understand.
+
+==================================================
+40. SEED DATA
+==================================================
+
+Create realistic but clearly synthetic prototype data.
+
+Important:
+
+Do NOT claim these are genuine MRPL confidential documents.
+
+Label prototype data internally as:
+
+"Synthetic Prototype Data"
+
+Example:
+
+Pump:
+P-204A
+
+Required discharge pressure:
+12 bar
+
+Vendor A:
+12 bar
+PASS
+
+Vendor B:
+10 bar
+FAIL
+
+Vendor A flow:
+102 m³/hr
+
+Vendor B flow:
+100 m³/hr
+
+Use realistic industrial terminology but do not imply access to actual confidential MRPL information.
+
+==================================================
+41. FINAL UI CHECK
+==================================================
+
+Before considering the prototype complete, verify:
+
+- Login works
+- Dashboard works
+- Workcell creation works
+- Demo Workcell loading works
+- Documents display correctly
+- Unauthorized document is visibly blocked
+- Initialization validation works
+- Workflow preview works
+- Start button works
+- Progress bar works
+- Agent execution works
+- Tool usage is visible
+- Exception is detected
+- Workflow pauses
+- Human review works
+- Approve works
+- Reject works
+- Workflow resumes
+- Verification works
+- Work package is generated
+- Approval is recorded
+- Release validation works
+- Release works
+- Audit trail works
+- Approval invalidation demo works
+- Navigation works
+- Back buttons work
+- Refreshing does not destroy important state
+- No broken routes
+- No console errors
+- No placeholder lorem ipsum
+- No fake external API calls
+- No unnecessary screens
+- No giant overloaded dashboard
+
+==================================================
+42. FINAL PRODUCT QUALITY BAR
+==================================================
+
+The final result should feel like:
+
+A real industrial enterprise prototype.
+
+Not:
+
+A generic AI chatbot.
+
+Not:
+
+A developer admin panel.
+
+Not:
+
+A collection of disconnected screens.
+
+The user should experience one coherent lifecycle:
+
+LOGIN
+→ WORKCELL
+→ VALIDATE
+→ PLAN
+→ EXECUTE
+→ EXCEPTION
+→ HUMAN REVIEW
+→ VERIFY
+→ APPROVE
+→ RELEASE
+
+The UI must make this lifecycle obvious.
+
+==================================================
+43. MOST IMPORTANT REQUIREMENT
+==================================================
+
+Prioritize FUNCTIONALITY and USER FLOW over visual complexity.
+
+If a feature cannot be implemented properly, simplify it rather than adding a fake complex UI.
+
+Build the smallest complete vertical slice that proves the concept.
+
+The final prototype must allow a judge to understand the product in under 2 minutes and experience the full workflow in approximately 3–5 minutes.
+
+==================================================
+44. FINAL SUCCESS CRITERIA
+==================================================
+
+The prototype is successful if a judge can answer YES to all of these:
+
+1. Can I see who is using the system?
+
+2. Can an employee initiate a Workcell for a specific industrial task?
+
+3. Does the system validate the user's role and task scope?
+
+4. Does it control which documents the AI can use?
+
+5. Can it handle multimodal evidence?
+
+6. Does it create a bounded execution workflow?
+
+7. Does the AI actually perform multiple steps?
+
+8. Does it use controlled tools?
+
+9. Does it show progress?
+
+10. Can it detect an industrial exception?
+
+11. Does the workflow pause for human approval?
+
+12. Can the human approve or reject?
+
+13. Does the system verify the result?
+
+14. Does it produce a final work package?
+
+15. Does it require approval before release?
+
+16. Can it demonstrate that changing an approved output invalidates the approval?
+
+17. Is the complete lifecycle auditable?
+
+18. Is the prototype clearly designed around on-premise/local AI rather than external AI APIs?
+
+If YES, the prototype demonstrates the core problem and solution.
+
+==================================================
+45. BUILD INSTRUCTIONS
+==================================================
+
+Start by creating the complete application structure.
+
+Then implement the screens in this order:
+
+1. Login
+2. Dashboard
+3. Initiate Workcell
+4. Evidence & Initialization
+5. Workflow Preview
+6. Workcell Execution
+7. Exception Review
+8. Verification
+9. Final Work Package
+10. Audit
+
+Then connect all screens through real application state.
+
+Do not create static screenshots.
+
+Buttons must actually work.
+
+State transitions must actually work.
+
+Use seeded data for the P-204A demo.
+
+Make the entire workflow executable from start to finish.
+
+After implementation, test the full flow yourself:
+
+Login
+→ create Workcell
+→ validate
+→ start
+→ execute
+→ exception
+→ approve
+→ verify
+→ release
+→ audit.
+
+Fix all broken navigation, state, styling, and runtime errors before considering the project complete.
+
+Finally, provide:
+
+1. A short README explaining the architecture.
+2. Demo credentials.
+3. How to run the application.
+4. The main demo flow.
+5. Which components are simulated for the hackathon prototype.
+6. Which parts would connect to real local models and enterprise systems in production.
+
+IMPORTANT FINAL PRINCIPLE:
+
+Do not build the largest possible system.
+
+Build the clearest possible demonstration of the Workcell concept.
+
+The winning user experience should communicate:
+
+"An authorized employee creates a confidential industrial task. The system creates a controlled Workcell, validates what the employee and AI are allowed to access, executes a bounded local-AI workflow, stops when human judgment is required, verifies the result, and produces an auditable approved work package."
+
+Build that experience end-to-end.

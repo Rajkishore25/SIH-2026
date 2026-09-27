@@ -1,6 +1,6 @@
-# [Project name]
+# MRPL Confidential Industrial Workcell
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A synthetic, local-first prototype for scoped industrial task execution, evidence admission, human review, verification, release, and audit.
 
 ## Run & Operate
 
@@ -22,15 +22,25 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/industrial-workcell/` — the runnable React + Vite Workcell experience.
+- `artifacts/industrial-workcell/src/App.tsx` — seeded workflow state machine, demo data, and page-level UI.
+- `artifacts/industrial-workcell/src/index.css` — shared visual tokens, typography, and control-room styling.
+- `artifacts/industrial-workcell/README.md` — demo credentials and the intended judge flow.
+- `artifacts/api-server/` — shared API scaffold; not required by the prototype's deterministic frontend flow.
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first build is frontend-first and deterministic so the hackathon demo does not depend on paid AI APIs or external services.
+- Workcell progression is modeled as explicit UI states so the high-severity exception cannot be skipped and release cannot happen before verification and approval.
+- Seeded prototype evidence is intentionally synthetic and visibly labels restricted material as blocked rather than implying enterprise authorization.
+- Session and demo progression use local browser persistence so a refresh does not erase the active demonstration.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Sign in as Engineer A and load the Pump P-204A replacement analysis.
+- Admit five authorized documents while visibly blocking one restricted document.
+- Preview a bounded workflow, watch local-AI-style progress and permitted tool activity, review a 10 bar vs 12 bar exception, verify claims, release a work package, and demonstrate approval invalidation after output modification.
+- Browse My Workcells, Documents, and Audit views without exposing backend implementation details.
 
 ## User preferences
 
