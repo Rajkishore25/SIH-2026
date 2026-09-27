@@ -1,6 +1,6 @@
 # MRPL Confidential Industrial Workcell
 
-Synthetic prototype for a trusted, local-first maintenance workcell.
+Synthetic prototype for a trusted, local-first multimodal maintenance workcell.
 
 ## Demo session
 
@@ -13,4 +13,6 @@ The frontend uses deterministic in-browser data and `localStorage` for the sessi
 
 ## Main path
 
-Sign in → load the active workcell → admit evidence → preview workflow → execute → review the high-severity pressure exception → approve → verify → generate and release the work package → simulate output modification to see approval invalidation and release blocking.
+Sign in → initiate a task → enter the asset/project, purpose, classification, and required documents → create the scoped Workcell → review evidence admission → inspect the selected workflow and tools → execute → review the high-severity exception → approve → verify → export the verified work package as a PDF → release → optionally simulate output modification to see approval invalidation and release blocking.
+
+The P-204A scenario is available through **Load P-204A demo** on the task input screen. Local PDF, image, and spreadsheet filenames can be added through the evidence picker; extraction is represented deterministically for the prototype and no uploaded bytes leave the browser.
